@@ -12,7 +12,7 @@ function LoginPage({ navigation }) {
       const token = await AsyncStorage.getItem('userToken');
       if (token) {
         // This goes inside your LoginPage component
-        navigation.navigate('MainApp', { screen: 'Map' });
+        navigation.navigate('MainApp');
 // Change 'Map' to your map route's name if different
       }
     };
@@ -42,7 +42,7 @@ function LoginPage({ navigation }) {
         if (response.status === 200) {
           // Store the token in AsyncStorage
           await AsyncStorage.setItem('userToken', data.token);
-          navigation.navigate('Map'); // Change 'Landing' to your landing route's name if different
+          navigation.navigate('MainApp'); // Change 'Landing' to your landing route's name if different
         } else {
           Alert.alert(
             'Login Failed',
