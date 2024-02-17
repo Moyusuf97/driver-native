@@ -7,13 +7,14 @@ function BottomSheetContent() {
     <View style={styles.bottomSheet}>
       {/* Your bottom sheet content goes here */}
       <Text>Bottom Sheet Content</Text>
+       <Text>Bottom Sheet Content</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   bottomSheet: {
-    height: 200,
+    height: 600,
     backgroundColor: '#fff',
     // Add your styles here
   },

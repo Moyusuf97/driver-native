@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, Dimensions } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import { View, Text, Button, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import MapView, { Marker, Circle } from 'react-native-maps';
 import * as Location from 'expo-location';
 import BottomSheetContent from './components/BottomSheetContent';
+import { Ionicons } from '@expo/vector-icons';
+
 
 export default function MapScreen({ navigation }) {
   const [location, setLocation] = useState(null);
@@ -23,6 +25,9 @@ export default function MapScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.toggleDrawer()} style={styles.menuButton}>
+        <Ionicons name="menu" size={30} color="#000" />
+      </TouchableOpacity>
       {location ? (
         <MapView
           style={styles.map}
@@ -54,6 +59,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  menuButton: {
+    position: 'absolute',
+    top: 40, // Adjust the position as needed
+    left: 10,
+    zIndex: 1,
   },
   map: {
     width: Dimensions.get('window').width,
