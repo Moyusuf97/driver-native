@@ -3,7 +3,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginPage from './pages/LoginPage';
-import MainApp from './MainApp'; // Import the MainApp that contains your Tab.Navigator
+import MainApp from './MainApp'; 
 
 const Stack = createStackNavigator();
 

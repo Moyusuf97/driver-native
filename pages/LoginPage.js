@@ -13,7 +13,6 @@ function LoginPage({ navigation }) {
       if (token) {
         // This goes inside your LoginPage component
         navigation.navigate('MainApp');
-// Change 'Map' to your map route's name if different
       }
     };
 

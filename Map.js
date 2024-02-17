@@ -62,9 +62,10 @@ const styles = StyleSheet.create({
   },
   menuButton: {
     position: 'absolute',
-    top: 40, // Adjust the position as needed
+    top: 10, 
     left: 10,
     zIndex: 1,
+    backgroundColor:  '#808080',
   },
   map: {
     width: Dimensions.get('window').width,

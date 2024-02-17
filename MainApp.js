@@ -17,12 +17,12 @@ const MainApp = () => {
 
   const handleLogout = async () => {
     await AsyncStorage.removeItem('userToken');
-    navigation.navigate('Login'); // Make sure 'Login' matches the name in your Stack.Navigator
+    navigation.navigate('Login'); 
   };
 
   return (
     <Tab.Navigator
-      initialRouteName="Map" // Ensure Map is the first screen shown in the Tab.Navigator
+      initialRouteName="Map" 
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;

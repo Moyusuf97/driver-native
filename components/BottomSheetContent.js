@@ -6,7 +6,6 @@ const { width: screenWidth } = Dimensions.get('window');
 function BottomSheetContent() {
   return (
     <View style={styles.bottomSheet}>
-      {/* Top two boxes now stacked vertically */}
       <View style={styles.column}>
         <View style={styles.box}>
           <Text>Dagens intäkter</Text>
@@ -18,7 +17,7 @@ function BottomSheetContent() {
         </View>
       </View>
 
-      {/* Bottom three boxes */}
+       {/* Bottom three boxes  */}
       <View style={styles.row}>
         <View style={styles.largeBox}>
           <Text>Acceptansgrad</Text>
@@ -42,7 +41,7 @@ const styles = StyleSheet.create({
     height: 650,
     backgroundColor: '#fff',
     padding: 10,
-    // Add your styles here
+   
   },
   row: {
     flexDirection: 'row',
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   box: {
-    width: screenWidth - 15, // take some padding into account
+    width: screenWidth - 15, 
     height: 50,
     backgroundColor: 'gray',
     justifyContent: 'center',
@@ -63,19 +62,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'gray',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 10,
+    marginRight: 5,
   },
   column: {
     justifyContent: 'space-between',
-    height: 110, // This should match the height of the largeBox
+    height: 110, 
   },
   smallBox: {
     width: screenWidth / 2 - 15,
-    height: 50, // Height set as 50px
+    height: 50, // 
     backgroundColor: 'gray',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10, // Margin bottom set as 10px
+    marginBottom: 10, 
   },
   // More styles for other components
 });

@@ -1,4 +1,3 @@
-// DrawerNavigator.js
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import MainApp from '../MainApp'; // Assuming MainApp is the entry point to your bottom tabs
