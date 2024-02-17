@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet, Dimensions } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
+import BottomSheetContent from './components/BottomSheetContent';
 
 export default function MapScreen({ navigation }) {
   const [location, setLocation] = useState(null);
@@ -43,7 +44,7 @@ export default function MapScreen({ navigation }) {
       ) : (
         <Text>{errorMsg || "Requesting location..."}</Text>
       )}
-      <Button title="Go to Logout" onPress={() => navigation.navigate('Logout')} />
+      <BottomSheetContent />
     </View>
   );
 }
