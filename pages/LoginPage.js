@@ -7,18 +7,17 @@ function LoginPage({ navigation }) {
   const [password, setPassword] = useState('');
 
   useEffect(() => {
-  
-    const checkForToken = async () => {
+    const checkForCredentials = async () => {
       const token = await AsyncStorage.getItem('userToken');
-      if (token) {
-      
+      const driverId = await AsyncStorage.getItem('driverId');
+      if (token && driverId) {
         navigation.navigate('MainApp');
       }
     };
-
-    checkForToken();
+  
+    checkForCredentials();
   }, [navigation]);
-
+  
   const handleLogin = async () => {
     if (username !== '' && password !== '') {
       try {

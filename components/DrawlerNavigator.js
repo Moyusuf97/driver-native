@@ -1,17 +1,15 @@
+// DrawerNavigator.js
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import MainApp from '../MainApp'; // Assuming MainApp is the entry point to your bottom tabs
+import MainApp from '../MainApp'; // This should eventually lead to MapScreen being rendered.
 
 const Drawer = createDrawerNavigator();
 
-const DrawerNavigator = () => {
+export default function DrawerNavigator() {
   return (
     <Drawer.Navigator>
       <Drawer.Screen name="Home" component={MainApp} />
-      {/* Add other screens here if needed */}
+      {/* other screens */}
     </Drawer.Navigator>
   );
-};
-
-
-export default DrawerNavigator;
+}
