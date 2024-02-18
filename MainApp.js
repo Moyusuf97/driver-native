@@ -19,6 +19,41 @@ const MainApp = () => {
     await AsyncStorage.removeItem('userToken');
     navigation.navigate('Login'); 
   };
+ /*
+  const handleLogout = async () => {
+    try {
+      const driverId = await AsyncStorage.getItem('driverId');
+      if (!driverId) {
+        console.error('Driver ID not found in AsyncStorage');
+        return;
+      }
+  
+      const response = await fetch('https://api-focnoae3da-uc.a.run.app/api/logout-driver', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          driverId: driverId,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.status === 200) {
+        console.log('Logout successful:', data.message);
+        await AsyncStorage.removeItem('userToken');
+        await AsyncStorage.removeItem('driverId');
+        navigation.navigate('Login');
+      } else {
+        console.error('Logout failed:', data.message);
+      }
+    } catch (error) {
+      console.error('Network or server error:', error);
+    }
+  };
+  */
+
 
   return (
     <Tab.Navigator

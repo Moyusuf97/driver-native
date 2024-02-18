@@ -7,11 +7,11 @@ function LoginPage({ navigation }) {
   const [password, setPassword] = useState('');
 
   useEffect(() => {
-    // Check for the token in AsyncStorage
+  
     const checkForToken = async () => {
       const token = await AsyncStorage.getItem('userToken');
       if (token) {
-        // This goes inside your LoginPage component
+      
         navigation.navigate('MainApp');
       }
     };
