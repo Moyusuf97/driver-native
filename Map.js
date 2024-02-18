@@ -4,11 +4,13 @@ import MapView, { Marker, Circle } from 'react-native-maps';
 import * as Location from 'expo-location';
 import BottomSheetContent from './components/BottomSheetContent';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
 
 
 export default function MapScreen({ navigation }) {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [driverId, setDriverId] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -20,8 +22,15 @@ export default function MapScreen({ navigation }) {
 
       let currentLocation = await Location.getCurrentPositionAsync({});
       setLocation(currentLocation);
-    })();
-  }, []);
+
+    
+     const storedDriverId = await AsyncStorage.getItem('driverId');
+     if (storedDriverId) {
+       setDriverId(storedDriverId); 
+       console.log('Retrieved Driver ID:', storedDriverId); 
+     }
+   })();
+ }, []);
 
   return (
     <View style={styles.container}>
