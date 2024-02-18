@@ -15,11 +15,11 @@ const Tab = createBottomTabNavigator();
 const MainApp = () => {
   const navigation = useNavigation();
 
-  const handleLogout = async () => {
+ /* const handleLogout = async () => {
     await AsyncStorage.removeItem('userToken');
     navigation.navigate('Login'); 
-  };
- /*
+  };*/
+ 
   const handleLogout = async () => {
     try {
       const driverId = await AsyncStorage.getItem('driverId');
@@ -28,7 +28,7 @@ const MainApp = () => {
         return;
       }
   
-      const response = await fetch('https://api-focnoae3da-uc.a.run.app/api/logout-driver', {
+      const response = await fetch('http://192.168.1.93:3001/api/logout-driver', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const MainApp = () => {
       console.error('Network or server error:', error);
     }
   };
-  */
+  
 
 
   return (
