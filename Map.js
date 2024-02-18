@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
-import MapView, { Marker, Circle } from 'react-native-maps';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Alert } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
-import BottomSheetContent from './components/BottomSheetContent';
 import { Ionicons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage'; 
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function MapScreen({ navigation }) {
   const [location, setLocation] = useState(null);
@@ -13,6 +11,8 @@ export default function MapScreen({ navigation }) {
   const [driverId, setDriverId] = useState('');
 
   useEffect(() => {
+    let locationUpdateInterval;
+
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
@@ -20,17 +20,47 @@ export default function MapScreen({ navigation }) {
         return;
       }
 
-      let currentLocation = await Location.getCurrentPositionAsync({});
-      setLocation(currentLocation);
+      updateLocation();
 
-    
-     const storedDriverId = await AsyncStorage.getItem('driverId');
-     if (storedDriverId) {
-       setDriverId(storedDriverId); 
-       console.log('Retrieved Driver ID:', storedDriverId); 
-     }
-   })();
- }, []);
+      const storedDriverId = await AsyncStorage.getItem('driverId');
+      if (storedDriverId) {
+        setDriverId(storedDriverId);
+      }
+
+      locationUpdateInterval = setInterval(() => {
+        updateLocation();
+      }, 10000);
+    })();
+
+    return () => clearInterval(locationUpdateInterval);
+  }, []);
+
+  const updateLocation = async () => {
+    let currentLocation = await Location.getCurrentPositionAsync({});
+    setLocation(currentLocation);
+    updateDriverLocation(currentLocation.coords.latitude, currentLocation.coords.longitude);
+  };
+
+  const updateDriverLocation = async (latitude, longitude) => {
+    try {
+      const driverId = await AsyncStorage.getItem('driverId');
+      if (!driverId) return;
+
+      await fetch(`http://192.168.1.93:3001/api/update-location/${driverId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          lat: latitude,
+          lng: longitude,
+        }),
+      });
+    } catch (error) {
+      console.error('Update location error:', error);
+      Alert.alert('Location Update Failed', 'Unable to update driver location.');
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -58,7 +88,6 @@ export default function MapScreen({ navigation }) {
       ) : (
         <Text>{errorMsg || "Requesting location..."}</Text>
       )}
-      <BottomSheetContent />
     </View>
   );
 }
@@ -71,10 +100,10 @@ const styles = StyleSheet.create({
   },
   menuButton: {
     position: 'absolute',
-    top: 10, 
+    top: 10,
     left: 10,
     zIndex: 1,
-    backgroundColor:  '#808080',
+    backgroundColor: '#808080',
   },
   map: {
     width: Dimensions.get('window').width,
