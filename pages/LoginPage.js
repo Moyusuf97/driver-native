@@ -35,13 +35,16 @@ function LoginPage({ navigation }) {
             }),
           },
         );
-
+  
         const data = await response.json();
-
+  
         if (response.status === 200) {
-          // Store the token in AsyncStorage
           await AsyncStorage.setItem('userToken', data.token);
-          navigation.navigate('MainApp'); // Change 'Landing' to your landing route's name if different
+          await AsyncStorage.setItem('driverId', data.driverId); 
+          
+          console.log('Driver ID:', data.driverId); 
+        
+          navigation.navigate('MainApp');
         } else {
           Alert.alert(
             'Login Failed',
@@ -63,6 +66,7 @@ function LoginPage({ navigation }) {
       );
     }
   };
+  
 
   return (
     <View style={styles.container}>
