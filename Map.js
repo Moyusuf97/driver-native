@@ -34,7 +34,7 @@ export default function MapScreen({ navigation }) {
 
     return () => clearInterval(locationUpdateInterval);
   }, []);
-
+//hello world 
   const updateLocation = async () => {
     let currentLocation = await Location.getCurrentPositionAsync({});
     setLocation(currentLocation);
