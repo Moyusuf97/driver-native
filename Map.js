@@ -45,22 +45,29 @@ export default function MapScreen({ navigation }) {
     try {
       const driverId = await AsyncStorage.getItem('driverId');
       if (!driverId) return;
-
-      await fetch(`http://192.168.1.93:3001/api/update-location/${driverId}`, {
+  
+      const response = await fetch(`http://192.168.1.93:3001/api/update-location/${driverId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          lat: latitude,
-          lng: longitude,
+          location: {
+            type: 'Point',
+            coordinates: [longitude, latitude], 
+          },
         }),
       });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok.');
+      }
     } catch (error) {
       console.error('Update location error:', error);
       Alert.alert('Location Update Failed', 'Unable to update driver location.');
     }
   };
+  
 
   return (
     <View style={styles.container}>
