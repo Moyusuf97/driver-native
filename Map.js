@@ -1,9 +1,11 @@
+//Map.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Alert } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {GOOGLE_MAP_API_KEY} from '@env';
 
 export default function MapScreen({ navigation }) {
   const [location, setLocation] = useState(null);
@@ -66,7 +68,7 @@ export default function MapScreen({ navigation }) {
       console.log('Location updated successfully for driverId:', driverId);
     } catch (error) {
       console.error('Update location error:', error);
-      Alert.alert('Location Update Failed', `Unable to update driver location. Error: ${error.message}`);
+      // Alert.alert('Location Update Failed', `Unable to update driver location. Error: ${error.message}`);
     }
   };
 
@@ -108,21 +110,22 @@ export default function MapScreen({ navigation }) {
       </TouchableOpacity>
       {location ? (
         <MapView
-          style={styles.map}
-          initialRegion={{
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}>
-          <Marker
-            coordinate={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
-            }}
-            title="Your Location"
-          />
-        </MapView>
+        provider={MapView.PROVIDER_GOOGLE} // Add this line to use Google Maps
+        style={styles.map}
+        initialRegion={{
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+         latitudeDelta: 0.0922,
+         longitudeDelta: 0.0421,
+  }}>
+  <Marker
+    coordinate={{
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    }}
+    title="Your Location"
+  />
+</MapView>
       ) : (
         <Text>{errorMsg || "Requesting location..."}</Text>
       )}
