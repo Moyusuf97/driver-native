@@ -40,11 +40,20 @@ export default function MapScreen({ navigation }) {
     setLocation(currentLocation);
     updateDriverLocation(currentLocation.coords.latitude, currentLocation.coords.longitude);
   };
-
   const updateDriverLocation = async (latitude, longitude) => {
     try {
+      // Retrieve the driverId from AsyncStorage
       const driverId = await AsyncStorage.getItem('driverId');
-      if (!driverId) return;
+      
+      // Log the retrieved driverId to verify it
+      console.log('Retrieved driverId from AsyncStorage:', driverId);
+  
+      // Check if driverId is not available
+      if (!driverId) {
+        console.error('No driverId found in AsyncStorage.');
+        Alert.alert('Error', 'No driver ID found. Please login again.');
+        return;
+      }
   
       const response = await fetch(`http://192.168.1.93:3001/api/update-location/${driverId}`, {
         method: 'PATCH',
@@ -52,21 +61,26 @@ export default function MapScreen({ navigation }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          location: {
-            type: 'Point',
-            coordinates: [longitude, latitude], 
-          },
+          latitude, 
+          longitude, 
         }),
       });
+      
+      console.log('Attempting to update location for driverId:', driverId);
   
       if (!response.ok) {
-        throw new Error('Network response was not ok.');
+        throw new Error(`Network response was not ok (status: ${response.status})`);
       }
+  
+      console.log('Location updated successfully for driverId:', driverId);
     } catch (error) {
       console.error('Update location error:', error);
-      Alert.alert('Location Update Failed', 'Unable to update driver location.');
+      Alert.alert('Location Update Failed', `Unable to update driver location. Error: ${error.message}`);
     }
   };
+  
+  
+
   
 
   return (

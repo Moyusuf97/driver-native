@@ -32,10 +32,12 @@ function LoginPage({ navigation }) {
           }),
         });
         const data = await response.json();
-
+  
         if (response.status === 200) {
           await AsyncStorage.setItem('userToken', data.token); 
-          await AsyncStorage.setItem('sessionActive', 'true'); 
+          await AsyncStorage.setItem('sessionActive', 'true');
+          await AsyncStorage.setItem('driverId', data.driverId.toString()); 
+  
           navigation.navigate('MainApp');
         } else {
           Alert.alert('Login Failed', data.message || 'An error occurred during login');
@@ -47,6 +49,7 @@ function LoginPage({ navigation }) {
       Alert.alert('Invalid Credentials', 'Username and password cannot be empty.');
     }
   };
+  
   return (
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
       <View style={styles.logoContainer}>
